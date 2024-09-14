@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar{
+    background: gray;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: white;
+}
+
+body{
+    overflow-x: hidden;
+    background:  linear-gradient(180deg, #3333A3 5.09%, #121212 33.4%);
+}
+
+.card-bg{
+    background-color: rgba(255, 255, 255, 0.04);
+}
