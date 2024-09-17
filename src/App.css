@@ -2,20 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar{
-    background: gray;
-    height: 5px;
+::-webkit-scrollbar {
+  background: gray;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: white;
+  background: white;
+  cursor: pointer;
 }
 
-body{
-    overflow-x: hidden;
-    background:  linear-gradient(180deg, #3333A3 5.09%, #121212 33.4%);
+.home-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+.home-wrapper::-webkit-scrollbar-thumb {
+  background-color: white;
+}
+.navbar-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+.navbar-wrapper::-webkit-scrollbar-thumb {
+  background-color: white;
 }
 
-.card-bg{
-    background-color: rgba(255, 255, 255, 0.04);
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background: linear-gradient(180deg, #3333a3 5.09%, #121212 33.4%);
+}
+
+.card-bg {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+.playlist {
+  background: linear-gradient(180deg, #def628 4.09%, #121212 46.28%);
+}
+.playlist::-webkit-scrollbar{
+  width: 4px;
 }
