@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import { CLIENT_ID } from "../hooks/useEnv";
 
-function TopMusic({
-  searchText,
-  partTitle,
-  accessToken,
-  onArtistClick,
-}) {
+function TopMusic({ searchText, partTitle, accessToken, onArtistClick }) {
   const spotifyApi = new SpotifyWebApi({
     clientId: CLIENT_ID,
   });
@@ -23,19 +18,17 @@ function TopMusic({
       .searchTracks(searchText)
       .then((res) => {
         setTracks(
-          res.body.tracks.items.map((item) => {
-            const data = {
-              img:
-              item.album.images[0]?.url || "https://via.placeholder.com/182",
-              artistName: item.artists[0].name,
-              trackName: item.name,
-              uri: item.uri,
-            };
-            return data;
-          })
+          res.body.tracks.items.map((item) => ({
+            img: item.album.images[0]?.url || "https://via.placeholder.com/182",
+            artistName: item.artists[0].name,
+            trackName: item.name,
+            albumName: item.album.name,
+            uri: item.uri,
+            id: item.id,
+          }))
         );
       })
-      .catch((err) => console.error("Xatolik: ", err));
+      .catch((err) => console.error("Error fetching tracks: ", err));
   }, [accessToken, searchText]);
 
   function handleArtistNameClick(artistName, img, tracks) {
@@ -51,7 +44,7 @@ function TopMusic({
           {partTitle}
         </h2>
         <button
-          className="text-[#ADADAD] uppercase font-bold text-[16px] leading-[20.24px]  hover:underline"
+          className="text-[#ADADAD] uppercase font-bold text-[16px] leading-[20.24px] hover:underline"
           onClick={() => setShowAll(!showAll)}
         >
           {showAll ? "See Less" : "See All"}
@@ -60,9 +53,11 @@ function TopMusic({
       <div className="flex gap-5 overflow-x-auto">
         {displayedTracks.map((item, index) => (
           <div
-            onClick={() => handleArtistNameClick(item.artistName, item.img, tracks)}
+            onClick={() =>
+              handleArtistNameClick(item.artistName, item.img, tracks)
+            }
             className="min-w-[200px] cursor-pointer card-bg p-5 rounded-[8px] duration-300"
-            key={index}
+            key={item.id} // Unique key for each track
           >
             <img
               className="mb-[25px] rounded-[8px]"
@@ -78,6 +73,8 @@ function TopMusic({
               <strong className="text-white cursor-pointer">
                 {item.artistName}
               </strong>
+              <p className="text-gray-400">{item.albumName}</p>{" "}
+              {/* Displaying the album name */}
             </div>
           </div>
         ))}

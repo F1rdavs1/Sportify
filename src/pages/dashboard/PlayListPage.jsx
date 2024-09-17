@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import Settings from "../../components/Settings";
 import {
@@ -9,26 +9,18 @@ import {
   SearchIcon,
   UplodeIcon,
   LikeIcon,
-  LikeRedIcon,
   ClockIcon,
 } from "../../assets/images/icon";
+import MusicCard from "../../components/MusicCard";
 
 function PlayListPage() {
   const location = useLocation();
   const { artist, img, tracks } = location.state || {};
-  const [likedTracks, setLikedTracks] = useState({});
-
-  const handleLikeTrack = (trackId) => {
-    setLikedTracks((prev) => ({
-      ...prev,
-      [trackId]: !prev[trackId],
-    }));
-  };
 
   return (
     <div className="w-full flex bg-gradient-to-b from-[#424242] to-[#121212] text-white">
       <div className="w-[80%] h-screen overflow-y-auto playlist">
-        <div className="flex items-center gap-[22px] pl-[41px] py-[20px] bg-[#DDF628] shadow-md">
+        <div className="flex items-center gap-[22px] pl-[41px] py-[20px] bg-[#DDF628] shadow-md cursor-pointer">
           <LeftIcon />
           <RightIcon />
         </div>
@@ -48,13 +40,13 @@ function PlayListPage() {
               {artist}
             </h1>
             <p className="mt-2 text-gray-400">
-              Made for you - 34 songs, 2hr 1min
+              Made for you - {tracks.length} songs, 2hr 1min
             </p>
           </div>
         </div>
         <div className="mt-[28px] pl-[41px] pr-[20px]">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-[22px]">
+            <div className="flex items-center space-x-[22px] cursor-pointer">
               <PlayIcon />
               <LikeIcon />
               <UplodeIcon />
@@ -79,31 +71,7 @@ function PlayListPage() {
             </thead>
             <tbody className="space-y-4">
               {tracks?.map((track, index) => (
-                <tr key={index} className="text-white">
-                  <td className="py-[14px]">{index + 1}</td>
-                  <td className="flex items-center gap-3 py-[14px]">
-                    <img
-                      src={track.img}
-                      alt="Track album"
-                      className="w-[50px] h-[50px] object-cover rounded-md"
-                    />
-                    <div>
-                      <h3>
-                        {track.trackName.length > 10
-                          ? `${track.trackName.slice(0, 10)}...`
-                          : track.trackName}
-                      </h3>
-                      <p className="text-gray-400">{track.artistName}</p>
-                    </div>
-                  </td>
-                  <td className="py-[14px]">{track.albumName || "Album Name"}</td>
-                  <td className="py-[14px] flex items-center space-x-4">
-                    <button onClick={() => handleLikeTrack(track.id)}>
-                      {likedTracks[track.id] ? <LikeRedIcon /> : <LikeIcon />}
-                    </button>
-                    <span>{track.duration || "3:45"}</span>
-                  </td>
-                </tr>
+                <MusicCard index={index} track={track} key={index} />
               ))}
             </tbody>
           </table>

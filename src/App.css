@@ -37,6 +37,9 @@ body {
 .playlist {
   background: linear-gradient(180deg, #def628 4.09%, #121212 46.28%);
 }
-.playlist::-webkit-scrollbar{
+.playlist::-webkit-scrollbar {
+  width: 4px;
+}
+.search::-webkit-scrollbar {
   width: 4px;
 }
